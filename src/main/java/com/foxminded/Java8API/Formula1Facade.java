@@ -1,35 +1,31 @@
 package com.foxminded.Java8API;
 
-import com.foxminded.Java8API.calculator.Calculator;
-import com.foxminded.Java8API.calculator.TimeCalculator;
-import com.foxminded.Java8API.converter.Converter;
-import com.foxminded.Java8API.converter.ListToMapConverter;
+import com.foxminded.Java8API.domain.DTO;
+import com.foxminded.Java8API.domain.Racer;
 import com.foxminded.Java8API.formatter.Formatter;
-import com.foxminded.Java8API.formatter.Formula1Formatter;
-import com.foxminded.Java8API.reader.LogReader;
+import com.foxminded.Java8API.parser.Parser;
 import com.foxminded.Java8API.reader.Reader;
-import java.util.Calendar;
-import java.util.Map;
+
+import java.util.List;
 
 public class Formula1Facade {
+    private final Reader fileReader;
+    private final Parser parser;
+    private final Formatter formatter;
 
-    public String domain() {
+    public Formula1Facade(Reader fileReader, Parser parser, Formatter formatter) {
+        this.fileReader = fileReader;
+        this.parser = parser;
+        this.formatter = formatter;
+    }
 
-        Reader startLogReader = new LogReader();
-        Converter startConverter = new ListToMapConverter(startLogReader
-                .read("src\\main\\resources\\start.log"));
-        Map<String, Calendar> startLogMap = startConverter.convertToMap();
+    public void domain() {
 
-        Reader endLogReader = new LogReader();
-        Converter endConverter = new ListToMapConverter(endLogReader
-                .read("src\\main\\resources\\end.log"));
-        Map<String, Calendar> endLogMap = endConverter.convertToMap();
+        DTO racers = new DTO(fileReader.read("src\\main\\resources\\start.log"),
+                fileReader.read("src\\main\\resources\\end.log"),
+                fileReader.read("src\\main\\resources\\abbreviations.txt"));
 
-        Calculator calculator = new TimeCalculator(startLogMap, endLogMap);
-        Map<String, Calendar> calculatedMap = calculator.calculate();
-
-        Formatter formatter = new Formula1Formatter(calculatedMap);
-
-        return formatter.format();
+        List<Racer> parseRacers = parser.parse(racers);
+        System.out.println(formatter.format(parseRacers));
     }
 }
