@@ -1,9 +1,12 @@
 package com.foxminded.Java8API.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Racer implements Comparable<Racer> {
+    private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("mm:ss.SSS");
 
     private final String name;
     private final String command;
@@ -40,4 +43,31 @@ public class Racer implements Comparable<Racer> {
 
         return racer1Time.compareTo(racer2Time);
     };
+
+    @Override
+    public boolean equals(Object otherRacer) {
+        if (this == otherRacer) {
+            return true;
+        }
+        if (otherRacer == null || getClass() != otherRacer.getClass()) {
+            return false;
+        }
+
+        Racer racer = (Racer) otherRacer;
+
+        return name.equals(racer.name) &&
+                command.equals(racer.command) &&
+                bestLapTime == racer.bestLapTime;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, command, bestLapTime);
+    }
+
+    @Override
+    public String toString() {
+
+        return "Name " + name + "Command " + command + "Best lap time " + FORMAT_TIME.format(bestLapTime.getTime());
+    }
 }

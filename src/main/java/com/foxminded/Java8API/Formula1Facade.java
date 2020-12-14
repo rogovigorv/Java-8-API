@@ -21,9 +21,9 @@ public class Formula1Facade {
 
     public void domain() {
 
-        DTO racers = new DTO(fileReader.read("src\\main\\resources\\start.log"),
-                fileReader.read("src\\main\\resources\\end.log"),
-                fileReader.read("src\\main\\resources\\abbreviations.txt"));
+        DTO racers = new DTO(fileReader.readTopRacers("src\\main\\resources\\start.log"),
+                fileReader.readTopRacers("src\\main\\resources\\end.log"),
+                fileReader.readTopRacers("src\\main\\resources\\abbreviations.txt"));
 
         List<Racer> parseRacers = parser.parse(racers);
         System.out.println(formatter.format(parseRacers));

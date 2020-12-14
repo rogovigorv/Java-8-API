@@ -6,17 +6,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class LogReader implements Reader{
 
-    @Override
-    public List<String> read(String fileAddress) {
+    public List<String> readTopRacers(String fileAddress) {
         List<String> readFromFile = new ArrayList<>();
 
         try {
-            Stream<String> streamRacerName = Files.lines(Paths.get(fileAddress));
-            readFromFile = streamRacerName.collect(Collectors.toList());
+            readFromFile = Files.lines(Paths.get(fileAddress))
+                    .collect(Collectors.toList());
 
         } catch (IOException e) {
             e.printStackTrace();

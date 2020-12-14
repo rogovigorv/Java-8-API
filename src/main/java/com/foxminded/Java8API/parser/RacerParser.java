@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RacerParser implements Parser {
     private static final SimpleDateFormat FORMAT_TIME =
@@ -18,7 +19,7 @@ public class RacerParser implements Parser {
 
     @Override
     public List<Racer> parse(DTO dto) {
-        List<Racer> result = new LinkedList<>();
+        /*List<Racer> result = new LinkedList<>();
 
         Map<String, Map<String, String>> nameAndCommandMap = nameAndCommandParse(dto.getRacersNames());
         Map<String, Calendar> startTimeMap = timeParse(dto.getStartRace());
@@ -44,7 +45,29 @@ public class RacerParser implements Parser {
                     }
                 }
             }
-        }
+        }*/
+
+        List<Racer> result = new LinkedList<>();
+
+        Map<String, Map<String, String>> nameAndCommandMap = nameAndCommandParse(dto.getRacersNames());
+        Map<String, Calendar> startTimeMap = timeParse(dto.getStartRace());
+        Map<String, Calendar> endTimeMap = timeParse(dto.getEndRace());
+
+        result = nameAndCommandMap.entrySet().stream().flatMap(a -> startTimeMap.entrySet().stream()
+                .flatMap(b -> endTimeMap.entrySet().stream().map(c -> {
+                    String racerName = null;
+                    String racerCommand = null;
+                    long time = 0;
+                    if (a.getKey().equals(b.getKey()) &&
+                            a.getKey().equals(c.getKey())) {
+
+                    racerName = getName(a.getValue());
+                    racerCommand = getCommand(a.getValue());
+                    time = c.getValue().getTimeInMillis() - b.getValue().getTimeInMillis();
+
+                    }
+                    return new Racer(racerName, racerCommand, getTime(time));
+                }))).collect(Collectors.toList());
 
         result.sort(Racer.RacerTimeComparator);
 
@@ -96,22 +119,18 @@ public class RacerParser implements Parser {
     }
 
     private String getName(Map<String, String> innerMap) {
-        String name = null;
+        StringBuilder name = new StringBuilder();
 
-        for (Map.Entry<String, String> entry : innerMap.entrySet()) {
-            name = entry.getKey();
-        }
+        innerMap.forEach((k, v) -> name.append(k));
 
-        return name;
+        return name.toString();
     }
 
     private String getCommand(Map<String, String> innerMap) {
-        String command = null;
+        StringBuilder command = new StringBuilder();
 
-        for (Map.Entry<String, String> entry : innerMap.entrySet()) {
-            command = entry.getValue();
-        }
+        innerMap.forEach((k, v) -> command.append(v));
 
-        return command;
+        return command.toString();
     }
 }
