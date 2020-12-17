@@ -7,10 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class RacerParser implements Parser {
     private static final SimpleDateFormat FORMAT_TIME =
@@ -19,59 +19,21 @@ public class RacerParser implements Parser {
 
     @Override
     public List<Racer> parse(DTO dto) {
-        /*List<Racer> result = new LinkedList<>();
 
         Map<String, Map<String, String>> nameAndCommandMap = nameAndCommandParse(dto.getRacersNames());
         Map<String, Calendar> startTimeMap = timeParse(dto.getStartRace());
         Map<String, Calendar> endTimeMap = timeParse(dto.getEndRace());
 
-        for (Map.Entry<String, Map<String, String>> name : nameAndCommandMap.entrySet()) {
-            String nameAbbreviation = name.getKey();
+        return nameAndCommandMap.entrySet().stream().map(e -> {
 
-            for (Map.Entry<String, Calendar> start : startTimeMap.entrySet()) {
-                String startAbbreviation = start.getKey();
+            String racerName = getName(e.getValue());
+            String racerCommand = getCommand(e.getValue());
+            long time = endTimeMap.get(e.getKey()).getTimeInMillis()
+                    - startTimeMap.get(e.getKey()).getTimeInMillis();
 
-                for (Map.Entry<String, Calendar> end : endTimeMap.entrySet()) {
-                    String endAbbreviation = end.getKey();
+            return new Racer(racerName, racerCommand, getTime(time));
 
-                    if (nameAbbreviation.equals(startAbbreviation) &&
-                            nameAbbreviation.equals(endAbbreviation)) {
-
-                        String racerName = getName(name.getValue());
-                        String racerCommand = getCommand(name.getValue());
-                        long time = end.getValue().getTimeInMillis() - start.getValue().getTimeInMillis();
-
-                        result.add(new Racer(racerName, racerCommand, getTime(time)));
-                    }
-                }
-            }
-        }*/
-
-        List<Racer> result = new LinkedList<>();
-
-        Map<String, Map<String, String>> nameAndCommandMap = nameAndCommandParse(dto.getRacersNames());
-        Map<String, Calendar> startTimeMap = timeParse(dto.getStartRace());
-        Map<String, Calendar> endTimeMap = timeParse(dto.getEndRace());
-
-        result = nameAndCommandMap.entrySet().stream().flatMap(a -> startTimeMap.entrySet().stream()
-                .flatMap(b -> endTimeMap.entrySet().stream().map(c -> {
-                    String racerName = null;
-                    String racerCommand = null;
-                    long time = 0;
-                    if (a.getKey().equals(b.getKey()) &&
-                            a.getKey().equals(c.getKey())) {
-
-                    racerName = getName(a.getValue());
-                    racerCommand = getCommand(a.getValue());
-                    time = c.getValue().getTimeInMillis() - b.getValue().getTimeInMillis();
-
-                    }
-                    return new Racer(racerName, racerCommand, getTime(time));
-                }))).collect(Collectors.toList());
-
-        result.sort(Racer.RacerTimeComparator);
-
-        return result;
+        }).sorted(Racer.RacerTimeComparator).collect(toList());
     }
 
     private Map<String, Map<String, String>> nameAndCommandParse(List<String> abbreviations) {

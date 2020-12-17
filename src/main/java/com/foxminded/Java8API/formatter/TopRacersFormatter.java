@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 
-public class TopRacersFormatter implements Formatter {
+public class TopRacersFormatter implements Formatter<List<Racer>> {
     private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("mm:ss.SSS");
     private static final String LINE_BREAK = "\n";
     private static final String TAB = " ";
@@ -41,4 +41,5 @@ public class TopRacersFormatter implements Formatter {
 
         return result.toString();
     }
+
 }
