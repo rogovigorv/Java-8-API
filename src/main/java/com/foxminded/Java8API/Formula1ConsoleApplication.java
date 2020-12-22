@@ -7,7 +7,6 @@ import com.foxminded.Java8API.parser.Parser;
 import com.foxminded.Java8API.parser.RacerParser;
 import com.foxminded.Java8API.reader.LogReader;
 import com.foxminded.Java8API.reader.Reader;
-
 import java.util.List;
 
 public class Formula1ConsoleApplication {
@@ -21,7 +20,9 @@ public class Formula1ConsoleApplication {
         String startRace = "src\\main\\resources\\start.log";
         String endRace = "src\\main\\resources\\end.log";
 
-        Formula1Facade formula1Facade = new Formula1Facade(fileReader, parser, formatter, abbreviations, startRace, endRace);
-        formula1Facade.domain();
+        Formula1Facade formula1Facade =
+                new Formula1Facade(fileReader, parser, formatter, abbreviations, startRace, endRace);
+
+        formula1Facade.getTopRacersResult();
     }
 }

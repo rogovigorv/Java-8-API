@@ -5,11 +5,11 @@ import com.foxminded.Java8API.domain.Racer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static java.util.stream.Collectors.toList;
 
 public class RacerParser implements Parser {
@@ -33,7 +33,7 @@ public class RacerParser implements Parser {
 
             return new Racer(racerName, racerCommand, getTime(time));
 
-        }).sorted(Racer.RacerTimeComparator).collect(toList());
+        }).sorted(RacerTimeComparator).collect(toList());
     }
 
     private Map<String, Map<String, String>> nameAndCommandParse(List<String> abbreviations) {
@@ -95,4 +95,12 @@ public class RacerParser implements Parser {
 
         return command.toString();
     }
+
+    private final Comparator<Racer> RacerTimeComparator = (racer1, racer2) -> {
+
+        Calendar racer1Time = racer1.getBestLapTime();
+        Calendar racer2Time = racer2.getBestLapTime();
+
+        return racer1Time.compareTo(racer2Time);
+    };
 }

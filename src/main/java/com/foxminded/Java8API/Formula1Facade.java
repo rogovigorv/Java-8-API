@@ -5,7 +5,6 @@ import com.foxminded.Java8API.domain.Racer;
 import com.foxminded.Java8API.formatter.Formatter;
 import com.foxminded.Java8API.parser.Parser;
 import com.foxminded.Java8API.reader.Reader;
-
 import java.util.List;
 
 public class Formula1Facade {
@@ -26,7 +25,7 @@ public class Formula1Facade {
         this.endRace = endRace;
     }
 
-    public void domain() {
+    public void getTopRacersResult() {
 
         DTO racers = new DTO(fileReader.readTopRacers(startRace),
                 fileReader.readTopRacers(endRace),

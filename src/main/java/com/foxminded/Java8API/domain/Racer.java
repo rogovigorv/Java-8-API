@@ -2,7 +2,6 @@ package com.foxminded.Java8API.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Racer implements Comparable<Racer> {
@@ -36,14 +35,6 @@ public class Racer implements Comparable<Racer> {
         return (int) (this.bestLapTime.getTimeInMillis() - compareTime);
     }
 
-    public static Comparator<Racer> RacerTimeComparator = (racer1, racer2) -> {
-
-        Calendar racer1Time = racer1.getBestLapTime();
-        Calendar racer2Time = racer2.getBestLapTime();
-
-        return racer1Time.compareTo(racer2Time);
-    };
-
     @Override
     public boolean equals(Object otherRacer) {
         if (this == otherRacer) {
@@ -68,6 +59,7 @@ public class Racer implements Comparable<Racer> {
     @Override
     public String toString() {
 
-        return "Name " + name + "Command " + command + "Best lap time " + FORMAT_TIME.format(bestLapTime.getTime());
+        return "Name: " + name + " Command: " + command +
+                " Best lap time: " + FORMAT_TIME.format(bestLapTime.getTime());
     }
 }
