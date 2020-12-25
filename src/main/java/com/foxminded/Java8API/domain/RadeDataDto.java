@@ -3,12 +3,12 @@ package com.foxminded.Java8API.domain;
 import java.util.List;
 import java.util.Objects;
 
-public class DTO {
+public class RadeDataDto {
     private final List<String> startRace;
     private final List<String> endRace;
     private final List<String> racersNames;
 
-    public DTO(List<String> startRace, List<String> endRace, List<String> racersNames) {
+    public RadeDataDto(List<String> startRace, List<String> endRace, List<String> racersNames) {
         this.startRace = startRace;
         this.endRace = endRace;
         this.racersNames = racersNames;
@@ -35,11 +35,11 @@ public class DTO {
             return false;
         }
 
-        DTO dto = (DTO) otherDto;
+        RadeDataDto radeDataDto = (RadeDataDto) otherDto;
 
-        return startRace == dto.startRace &&
-                endRace == dto.endRace &&
-                racersNames == dto.racersNames;
+        return startRace == radeDataDto.startRace &&
+                endRace == radeDataDto.endRace &&
+                racersNames == radeDataDto.racersNames;
     }
 
     @Override

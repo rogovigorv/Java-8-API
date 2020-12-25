@@ -23,6 +23,6 @@ public class Formula1ConsoleApplication {
         Formula1Facade formula1Facade =
                 new Formula1Facade(fileReader, parser, formatter, abbreviations, startRace, endRace);
 
-        formula1Facade.getTopRacersResult();
+        System.out.println(formula1Facade.getTopRacersResult());
     }
 }

@@ -1,6 +1,6 @@
 package com.foxminded.Java8API;
 
-import com.foxminded.Java8API.domain.DTO;
+import com.foxminded.Java8API.domain.RadeDataDto;
 import com.foxminded.Java8API.domain.Racer;
 import com.foxminded.Java8API.formatter.Formatter;
 import com.foxminded.Java8API.parser.Parser;
@@ -25,13 +25,14 @@ public class Formula1Facade {
         this.endRace = endRace;
     }
 
-    public void getTopRacersResult() {
+    public String getTopRacersResult() {
 
-        DTO racers = new DTO(fileReader.readTopRacers(startRace),
+        RadeDataDto radeDataDto = new RadeDataDto(fileReader.readTopRacers(startRace),
                 fileReader.readTopRacers(endRace),
                 fileReader.readTopRacers(abbreviations));
 
-        List<Racer> parseRacers = parser.parse(racers);
-        System.out.println(formatter.format(parseRacers));
+        List<Racer> parseRacers = parser.parse(radeDataDto);
+
+        return formatter.format(parseRacers);
     }
 }

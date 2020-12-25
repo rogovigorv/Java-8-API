@@ -1,6 +1,6 @@
 package com.foxminded.Java8API.parser;
 
-import com.foxminded.Java8API.domain.DTO;
+import com.foxminded.Java8API.domain.RadeDataDto;
 import com.foxminded.Java8API.domain.Racer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class RacerParserTest {
     private final Parser racerParser = new RacerParser();
 
     @Mock
-    private DTO dto;
+    private RadeDataDto radeDataDto;
 
     @BeforeAll
     static void setup() {
@@ -41,15 +41,15 @@ public class RacerParserTest {
 
     @Test
     void makeParseDtoShouldReturnRacer() {
-        when(dto.getRacersNames()).thenReturn(FROM_ABBREVIATION_TXT_FILE);
-        when(dto.getStartRace()).thenReturn(FROM_START_LOG_FILE);
-        when(dto.getEndRace()).thenReturn(FROM_END_LOG_FILE);
+        when(radeDataDto.getRacersNames()).thenReturn(FROM_ABBREVIATION_TXT_FILE);
+        when(radeDataDto.getStartRace()).thenReturn(FROM_START_LOG_FILE);
+        when(radeDataDto.getEndRace()).thenReturn(FROM_END_LOG_FILE);
 
         final List<Racer> expected = new ArrayList<>();
         expected.add(new Racer("Sebastian Vettel", "FERRARI", SEBASTIAN_VETTEL_TIME));
         expected.add(new Racer("Daniel Ricciardo", "RED BULL RACING TAG HEUER", DANIEL_RICCIARDO_TIME));
 
-        final List<Racer> actual = racerParser.parse(dto);
+        final List<Racer> actual = racerParser.parse(radeDataDto);
 
         assertEquals(expected.toString(), actual.toString());
     }

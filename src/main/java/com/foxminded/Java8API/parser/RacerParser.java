@@ -1,6 +1,6 @@
 package com.foxminded.Java8API.parser;
 
-import com.foxminded.Java8API.domain.DTO;
+import com.foxminded.Java8API.domain.RadeDataDto;
 import com.foxminded.Java8API.domain.Racer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,11 +18,11 @@ public class RacerParser implements Parser {
     private static final String UNDERSCORE = "_";
 
     @Override
-    public List<Racer> parse(DTO dto) {
+    public List<Racer> parse(RadeDataDto radeDataDto) {
 
-        Map<String, Map<String, String>> nameAndCommandMap = nameAndCommandParse(dto.getRacersNames());
-        Map<String, Calendar> startTimeMap = timeParse(dto.getStartRace());
-        Map<String, Calendar> endTimeMap = timeParse(dto.getEndRace());
+        Map<String, Map<String, String>> nameAndCommandMap = nameAndCommandParse(radeDataDto.getRacersNames());
+        Map<String, Calendar> startTimeMap = timeParse(radeDataDto.getStartRace());
+        Map<String, Calendar> endTimeMap = timeParse(radeDataDto.getEndRace());
 
         return nameAndCommandMap.entrySet().stream().map(e -> {
 
