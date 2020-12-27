@@ -46,8 +46,10 @@ public class RacerParserTest {
         when(radeDataDto.getEndRace()).thenReturn(FROM_END_LOG_FILE);
 
         final List<Racer> expected = new ArrayList<>();
-        expected.add(new Racer("Sebastian Vettel", "FERRARI", SEBASTIAN_VETTEL_TIME));
-        expected.add(new Racer("Daniel Ricciardo", "RED BULL RACING TAG HEUER", DANIEL_RICCIARDO_TIME));
+        expected.add(new Racer("Sebastian Vettel",
+                "FERRARI", SEBASTIAN_VETTEL_TIME));
+        expected.add(new Racer("Daniel Ricciardo",
+                "RED BULL RACING TAG HEUER", DANIEL_RICCIARDO_TIME));
 
         final List<Racer> actual = racerParser.parse(radeDataDto);
 

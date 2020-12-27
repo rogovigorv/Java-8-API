@@ -16,7 +16,7 @@ public class TopRacersFormatter implements Formatter<List<Racer>> {
     @Override
     public String format(List<Racer> racers) {
         StringBuilder result = new StringBuilder();
-        racers.forEach(System.out::println);
+
         racers.stream().limit(15).forEach(r -> result.append(r.getName())
                 .append(String.format("%1$" + (20 - r.getName().length()) + "s", VERTICAL_LINE))
                 .append(TAB)

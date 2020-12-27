@@ -82,7 +82,8 @@
                 <configuration>
                     <excludes>
                         <exclude>**/*com/foxminded/Java8API/Formula1ConsoleApplication.class</exclude>
-                        <exclude>**/*com/foxminded/Java8API/Formula1Facade.class</exclude>
+                        <exclude>**/*com/foxminded/Java8API/domain/Racer.class</exclude>
+                        <exclude>**/*com/foxminded/Java8API/domain/RadeDataDto.class</exclude>
                         <exclude>**/*com/foxminded/Java8API/reader/LogReader.class</exclude>
                     </excludes>
                     <rules>
