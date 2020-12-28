@@ -15,6 +15,8 @@ public class TopRacersFormatter implements Formatter<List<Racer>> {
 
     @Override
     public String format(List<Racer> racers) {
+        validate(racers);
+
         StringBuilder result = new StringBuilder();
 
         racers.stream().limit(15).forEach(r -> result.append(r.getName())
@@ -42,4 +44,13 @@ public class TopRacersFormatter implements Formatter<List<Racer>> {
         return result.toString();
     }
 
+    private void validate(List<Racer> racers) {
+        if (racers == null) {
+            throw new IllegalArgumentException("Racers list is null");
+        }
+
+        if (racers.isEmpty()) {
+            throw new IllegalArgumentException("Racers list is empty");
+        }
+    }
 }

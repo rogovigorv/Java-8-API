@@ -28,34 +28,25 @@ public class Formula1FacadeTest {
     private static final String RESULT =
             "Sebastian Vettel   | FERRARI                     | 01:04.415";
 
-    @Mock
-    Reader fileReader;
-
-    @Mock
-    Parser parser;
-
-    @Mock
-    Formatter<List<Racer>> formatter;
-
-    @Mock
-    RadeDataDto radeDataDto;
-
-    private Formula1Facade formula1Facade;
-
     @BeforeEach
     private void setup() {
-
-        formula1Facade = new Formula1Facade(fileReader, parser, formatter,
-                ABBREVIATIONS_TXT_FILE_ADDRESS,
-                START_RACE_LOG_FILE_ADDRESS,
-                END_RACE_LOG_FILE_ADDRESS
-        );
-
-        FROM_ABBREVIATION_TXT_FILE.add("SVF_Sebastian Vettel_FERRARI");
-        FROM_START_LOG_FILE.add("SVF2018-05-24_12:02:58.917");
-        FROM_END_LOG_FILE.add("SVF2018-05-24_12:04:03.332");
-
+        createFacadeObject();
+        addToList();
     }
+
+    @Mock
+    private Reader fileReader;
+
+    @Mock
+    private Parser parser;
+
+    @Mock
+    private Formatter<List<Racer>> formatter;
+
+    @Mock
+    private RadeDataDto radeDataDto;
+
+    private Formula1Facade formula1Facade;
 
     @Test
     void makeFormula1FacadeShouldCheckOrderAndMethodCalls() {
@@ -87,5 +78,19 @@ public class Formula1FacadeTest {
         order.verify(fileReader).readTopRacers(END_RACE_LOG_FILE_ADDRESS);
         order.verify(fileReader).readTopRacers(ABBREVIATIONS_TXT_FILE_ADDRESS);
         order.verify(formatter).format(parser.parse(radeDataDto));
+    }
+
+    private void addToList() {
+        FROM_ABBREVIATION_TXT_FILE.add("SVF_Sebastian Vettel_FERRARI");
+        FROM_START_LOG_FILE.add("SVF2018-05-24_12:02:58.917");
+        FROM_END_LOG_FILE.add("SVF2018-05-24_12:04:03.332");
+    }
+
+    private void createFacadeObject() {
+        formula1Facade = new Formula1Facade(fileReader, parser, formatter,
+                ABBREVIATIONS_TXT_FILE_ADDRESS,
+                START_RACE_LOG_FILE_ADDRESS,
+                END_RACE_LOG_FILE_ADDRESS
+        );
     }
 }

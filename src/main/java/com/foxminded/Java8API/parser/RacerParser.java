@@ -19,6 +19,7 @@ public class RacerParser implements Parser {
 
     @Override
     public List<Racer> parse(RadeDataDto radeDataDto) {
+        validate(radeDataDto);
 
         Map<String, Map<String, String>> nameAndCommandMap = nameAndCommandParse(radeDataDto.getRacersNames());
         Map<String, Calendar> startTimeMap = timeParse(radeDataDto.getStartRace());
@@ -94,6 +95,24 @@ public class RacerParser implements Parser {
         innerMap.forEach((k, v) -> command.append(v));
 
         return command.toString();
+    }
+
+    private void validate(RadeDataDto radeDataDto) {
+        if (radeDataDto == null) {
+            throw new IllegalArgumentException("DTO object is null");
+        }
+
+        if (radeDataDto.getRacersNames() == null ||
+                radeDataDto.getStartRace() == null ||
+                radeDataDto.getEndRace() == null) {
+            throw new IllegalArgumentException("List from DTO object is null");
+        }
+
+        if (radeDataDto.getRacersNames().isEmpty() ||
+                radeDataDto.getStartRace().isEmpty() ||
+                radeDataDto.getEndRace().isEmpty()) {
+            throw new IllegalArgumentException("List from DTO object is empty");
+        }
     }
 
     private final Comparator<Racer> RacerTimeComparator = (racer1, racer2) -> {
